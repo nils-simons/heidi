@@ -16,8 +16,15 @@ const stockTrendScore = async (term, nNews, res) => {
         var scoreCount = []
 
         var news = await googleNewsAPI.getNews(googleNewsAPI.SEARCH, term, "en-US")
-        var news = news.items.slice(0, nNews);
+        var news = news.items
+        var i = 0
+
         for (const article of news) {
+
+            if (i == nNews) {
+                break;
+            }
+
             articleTitle = article.title.split(' - ')[0]
             // console.log(articleTitle)
             var resp = await openai.createChatCompletion({
@@ -40,6 +47,7 @@ const stockTrendScore = async (term, nNews, res) => {
                 // console.log(res.data.choices[0].message.content)
                 console.log(`${articleTitle}   (${score})`)
                 scoreCount.push(parseFloat(score))
+                i++
             }
         }
 

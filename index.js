@@ -14,11 +14,8 @@ app.use(express.static('public'))
 
 app.post('/api/stocktrendscore', (req, res) => {
   res.setHeader('Content-Type', 'application/json')
+  console.log(`--------------------${req.body.term}/${req.body.n}--------------------`)
   stockTrendScore.stockTrendScore(req.body.term, req.body.n, res)
-  .then((data) => {
-    console.log(data)
-  })
-  // res.send(score)
 })
 // stockTrendScore.stockTrendScore('LVMH', 10)
 
