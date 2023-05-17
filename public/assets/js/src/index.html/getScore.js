@@ -9,6 +9,7 @@ document.getElementById('get-btn').addEventListener('click', (e) => {
             "term": document.getElementById('get-inpt').value,
             "n": parseInt(document.getElementById('get-news').value)
         }),
+        timeout: 120000,
         redirect: 'follow'
     })
     .then(response => response.json())
