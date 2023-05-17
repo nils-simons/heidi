@@ -7,7 +7,7 @@ document.getElementById('get-btn').addEventListener('click', (e) => {
         },
         body: JSON.stringify({
             "term": document.getElementById('get-inpt').value,
-            "n": 10
+            "n": parseInt(document.getElementById('get-news').value)
         }),
         redirect: 'follow'
     })
