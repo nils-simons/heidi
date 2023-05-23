@@ -27,21 +27,25 @@ const stockTrendScore = async (term, nNews, res) => {
 
             articleTitle = article.title.split(' - ')[0]
             // console.log(articleTitle)
-            var resp = await openai.createChatCompletion({
-                model: "gpt-3.5-turbo",
-                messages: [
-                {
-                    "role": "system",
-                    "content": `You are a financial advisor. When the user gives you a headline, respond with a number between -1.0 and 1.0, signifying whether the headline is extremely negative (-1.0), neutral (0.0), or extremely positive (1.0) for the stock value of ${term}.`
-                },
-                {
-                    "role": "user",
-                    "content": articleTitle
-                }
-                ],
-            })
+            try {
+                var resp = await openai.createChatCompletion({
+                    model: "gpt-3.5-turbo",
+                    messages: [
+                    {
+                        "role": "system",
+                        "content": `You are a financial advisor. When the user gives you a headline, respond with a number between -1.0 and 1.0, signifying whether the headline is extremely negative (-1.0), neutral (0.0), or extremely positive (1.0) for the stock value of ${term}.`
+                    },
+                    {
+                        "role": "user",
+                        "content": articleTitle
+                    }
+                    ],
+                })
+                 var score = regScore.exec(resp.data.choices[0].message.content)
 
-            var score = regScore.exec(resp.data.choices[0].message.content)
+            } catch (err) {
+                score = null
+            }
 
             if (score !== null) {
                 // console.log(res.data.choices[0].message.content)
